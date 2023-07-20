@@ -15,11 +15,8 @@ class Status extends Model
         'name',
     ];
 
-
     public function Attendance()
     {
         return $this->hasMany(Attendance::class, 'status_id');
     }
-
-    
 }

@@ -38,4 +38,9 @@ class Student extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'courses_id');
+    }
 }

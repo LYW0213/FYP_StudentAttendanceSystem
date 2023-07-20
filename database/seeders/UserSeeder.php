@@ -55,7 +55,7 @@ class UserSeeder extends Seeder
         foreach ($items as $item) {
             User::updateOrCreate($item);
         }
-        
+
 
         // User::factory()->count(50)->create(); // Fake data for testing
     }

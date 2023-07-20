@@ -8,7 +8,25 @@ class LecturerController extends Controller
 {
     public function LecturerDashboard(){
 
-        return view('lecturer.lecturer_dashboard');
-        
+        return view('dashboard');
+
     }
+
+    public function Subjectlist(){
+
+        return view('subjectlist');
+
+    }//End Method
+
+    public function Classeslist(){
+
+        return view('classeslist');
+
+    }//End Method
+
+    public function Attendancelist(){
+
+        return view('attendance_list');
+
+    }//End Method
 }

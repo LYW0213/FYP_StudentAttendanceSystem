@@ -27,7 +27,7 @@ return new class extends Migration
 
             $table->foreign('faculties_id')->references('id')->on('faculties');
             $table->foreign('roles_id')->references('id')->on('roles');
-            
+
         });
     }
 

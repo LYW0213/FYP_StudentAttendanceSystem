@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+
+
 class Faculty extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -15,4 +17,9 @@ class Faculty extends Model
         'name',
         'description',
     ];
+
+    public function faculty()
+    {
+        return $this->belongsTo(Faculty::class, 'faculties_id');
+    }
 }
