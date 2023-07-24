@@ -218,4 +218,12 @@
         opacity: 1;
         text-decoration: none;
     }
+
+    /* alert close */
+    .btn-close {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 </style>

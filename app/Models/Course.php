@@ -11,11 +11,8 @@ class Course extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $fillable = [
-        'name',
-        'description',
-        'faculty_id',
-    ];
+    protected $fillable = ['name', 'description', 'faculties_id'];
+
 
     public function student()
     {

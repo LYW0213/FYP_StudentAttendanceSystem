@@ -43,7 +43,32 @@
                 <section class="section">
                     <div class="col-12">
                         <div class="row">
-                            <div class="col-md-12 col-12">
+                            <div class="col-md-6 col-12">
+                                @if ($errors->any())
+                                    <div class="alert alert-light-danger color-danger">
+                                        <i class="bi bi-exclamation-circle"></i> Error:
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                    </div>
+                                @endif
+
+                                @if (session()->has('success'))
+                                    <div class="alert alert-light-success color-success">
+                                        <div class="success-message">
+                                            <i class="bi bi-check-circle"></i> {{ session('success') }}
+                                        </div>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="col-md-6 col-12">
                                 <div class="buttons" style="text-align: right;">
                                     <a class="btn btn-primary bg-blue" data-bs-toggle="modal"
                                         data-bs-target="#AddProgram">Add New</a>
@@ -70,16 +95,31 @@
                                                 </svg>
                                             </button>
                                         </div>
-                                        <form action="#">
+                                        <form method="POST" action="{{ route('admin.programcreate') }}">
+                                            @csrf
+                                            @method('post')
                                             <div class="modal-body">
-                                                <label for="text">Programs Name: </label>
+                                                <label for="text">Program Name: </label>
                                                 <div class="form-group">
-                                                    <input id="text" type="text" placeholder="Faculty name"
+                                                    <input type="text" name="name" placeholder="Program name"
                                                         class="form-control">
                                                 </div>
+                                                <label>Faculty:</label>
+                                                <div class="form-group">
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        name="faculty_id">
+                                                        <option value="" selected disabled>Select a Faculty
+                                                        </option>
+                                                        @foreach ($faculties as $faculty)
+                                                            <option value="{{ $faculty->id }}">{{ $faculty->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
                                                 <label for="textarea">Description: </label>
                                                 <div class="form-group">
-                                                    <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Description"></textarea>
+                                                    <textarea type="textarea" name="description" class="form-control" placeholder="Description"></textarea>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -115,7 +155,7 @@
                                 <td>
                                     <div class="d-flex">
                                         <a href="#" class="mr-2" data-bs-toggle="modal"
-                                            data-bs-target="#EditProgram ">
+                                            data-bs-target="#EditFaculty{{ $course->id }} ">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-pencil-square"
                                                 viewBox="0 0 16 16"
                                                 style="width: 30px; height: 30px; fill: rgb(0, 140, 255);">
@@ -127,8 +167,9 @@
                                         </a>
 
                                         <!-- Modal -->
-                                        <div class="modal fade text-left" id="EditProgram" tabindex="-1"
-                                            role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+                                        <div class="modal fade text-left" id="EditFaculty{{ $course->id }}"
+                                            tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
+                                            aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
                                                 role="document">
                                                 <div class="modal-content">
@@ -140,25 +181,35 @@
                                                             <i data-feather="x"></i>
                                                         </button>
                                                     </div>
-                                                    <form action="#">
+                                                    <form method="POST"
+                                                        action="{{ route('admin.programedit', ['program' => $course->id]) }}">
+
+
+                                                        @csrf
+                                                        @method('put')
                                                         <div class="modal-body">
                                                             <label>Program Name:</label>
                                                             <div class="form-group">
-                                                                <input type="text" class="form-control">
+                                                                <input type="text" class="form-control"
+                                                                    value="{{ $course->name }}">
                                                             </div>
+
                                                             <label>Description:</label>
-                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">{{ $course->description }}</textarea>
+
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn"
                                                                 data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Save</button>
+                                                            <button type="submit"
+                                                                class="btn btn-primary">Save</button>
                                                         </div>
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
-                                        <a href="#">
+                                        <a href="#" class="mr-2"
+                                            onclick="return confirmDelete({{ $course->id }})">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash3"
                                                 viewBox="0 0 16 16" style="width: 29px; height: 29px; fill: red;">
                                                 <path
@@ -175,24 +226,14 @@
             <div class="table-responsive dataTable-bottom">
                 <nav class="dataTable-pagination">
                     <ul class="dataTable-pagination-list pagination pagination-primary">
-                        <li class="active page-item"><a href="#" data-page="1" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" data-page="2" class="page-link">2</a></li>
-                        <li class="page-item"><a href="#" data-page="3" class="page-link">3</a></li>
-                        <li class="pager page-item"><a href="#" data-page="2" class="page-link">›</a></li>
+                        {{ $courses->links('pagination::bootstrap-4') }}
                     </ul>
                 </nav>
             </div>
         </div>
     </div>
-    </section>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    @include('includes.script')
 
+    @include('includes.script')
 
 </body>
 

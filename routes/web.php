@@ -10,8 +10,6 @@ use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\CourseController;
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,22 +45,32 @@ Route::middleware('role:1')->prefix('admin')->group(function () {
     Route::resource('faculties', FacultyController::class);
 
     Route::get('/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
-    Route::get('/adminlecturerlist', [AdminController::class, 'Adminlecturerlist'])->name('admin.adminlecturerlist');
+
     Route::get('/adminlecturerlist', [UserController::class, 'index'])->name('admin.adminlecturerlist');
-    Route::get('/adminlecturer_create', [AdminController::class, 'Adminlecturer_create'])->name('admin.adminlecturer_create');
-    Route::get('/adminlecturer_edit', [AdminController::class, 'Adminlecturer_edit'])->name('admin.adminlecturer_edit');
-    Route::post('/adminlecturer_create', [UserController::class, 'adminlecturercreate'])->name('admin.adminlecturercreate');
+    Route::get('/adminlecturer/create', [UserController::class, 'create'])->name('admin.adminlecturer_create');
+    Route::get('/adminlecturer/edit', [UserController::class, 'edit'])->name('admin.adminlecturer_edit');
+
     Route::get('/studentlist', [AdminController::class, 'Studentlist'])->name('admin.studentlist');
     Route::get('/studentlist', [UserController::class, 'studentlist'])->name('admin.studentlist');
     Route::get('/student_create', [AdminController::class, 'Student_create'])->name('admin.student_create');
     Route::get('/student_edit', [AdminController::class, 'Student_edit'])->name('admin.student_edit');
-    Route::get('/facultylist', [AdminController::class, 'Facultylist'])->name('admin.facultylist');
-    Route::get('/facultylist', [FacultyController::class, 'index'])->name('admin.facultylist');
-    Route::get('/programslist', [AdminController::class, 'Programslist'])->name('admin.programslist');
+
+    Route::get('/facultylist', [FacultyController::class, 'index'])->name('admin.facultylist'); //show faculty page and list
+    Route::post('/faculty/create', [FacultyController::class, 'store'])->name('admin.facultycreate'); //store in database
+    Route::put('/faculty/{faculty}/edit', [FacultyController::class, 'edit'])->name('admin.facultyedit');//edit
+    Route::delete('/faculty/{faculty}', [FacultyController::class, 'destroy'])->name('admin.facultydelete');//delete
+
+
     Route::get('/programslist', [CourseController::class, 'index'])->name('admin.programslist');
+    Route::post('/program/create', [CourseController::class, 'store'])->name('admin.programcreate'); //store in database
+    Route::put('/program/{program}/edit', [CourseController::class, 'edit'])->name('admin.programedit');//edit
+    Route::delete('/program/{program}', [CourseController::class, 'destroy'])->name('admin.programdelete');//delete
+
     Route::get('/subjectlist', [AdminController::class, 'Subjectlist'])->name('admin.subjectlist');
     Route::get('/subjectlist', [SubjectController::class, 'index'])->name('admin.subjectlist');
+
     Route::get('/classeslist', [AdminController::class, 'Classeslist'])->name('admin.classeslist');
+
     Route::get('/attendancelist', [AdminController::class, 'Attendancelist'])->name('attendancelist');
 
 

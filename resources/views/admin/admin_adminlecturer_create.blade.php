@@ -58,7 +58,8 @@
 
                                     <div class="mx-4 form-group has-icon-left">
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder="Name" id="name" name="name" required>
+                                            <input type="text" class="form-control" placeholder="Name" id="name"
+                                                name="name" required>
                                             <div class="form-control-icon">
                                                 <i class="bi bi-person"></i>
                                             </div>
@@ -67,7 +68,8 @@
                                     <div class="mx-4">
                                         <div class="form-group has-icon-left">
                                             <div class="position-relative">
-                                                <input type="email" class="form-control" placeholder="Email" id="email-horizontal-icon" name="email" required>
+                                                <input type="email" class="form-control" placeholder="Email"
+                                                    id="email-horizontal-icon" name="email" required>
                                                 <div class="form-control-icon">
                                                     <i class="bi bi-envelope"></i>
                                                 </div>
@@ -78,13 +80,15 @@
                                         <div class="d-flex mx-4 form-group ">
                                             <label for="gender" class="mr-2">Gender:</label>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" value="Male" id="gender-male" required>
+                                                <input class="form-check-input" type="radio" name="gender"
+                                                    value="Male" id="gender-male" required>
                                                 <label class="form-check-label" for="gender-male">
                                                     Male
                                                 </label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" value="Female" id="gender-female" required>
+                                                <input class="form-check-input" type="radio" name="gender"
+                                                    value="Female" id="gender-female" required>
                                                 <label class="form-check-label" for="gender-female">
                                                     Female
                                                 </label>
@@ -102,30 +106,31 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="mx-4 form-group">
-                                        <button class="btn btn-primary dropdown-toggle me-1 " type="button"
-                                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false"
-                                            style="width: 100%; background-color: #ffffff; border: 1px solid #dce7f1; color:#747d86">
-                                            Faculty
-                                        </button>
-                                        <div class="mx-4 form-group dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Option 1</a>
-                                            <a class="dropdown-item" href="#">Option 2</a>
-                                            <a class="dropdown-item" href="#">Option 3</a>
+                                        <div class="form-group">
+                                            <select class="form-select" aria-label="Default select example"
+                                                name="faculty_id">
+                                                <option value="" selected disabled>Select a Faculty
+                                                </option>
+                                                @foreach ($faculties as $faculty)
+                                                    <option value="{{ $faculty->id }}">{{ $faculty->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="mx-4 form-group">
-                                        <button class="btn btn-primary dropdown-toggle me-1" type="button"
-                                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false"
-                                            style="width: 100%; background-color: #ffffff; border: 1px solid #dce7f1; color:#747d86">
-                                            Role
-                                        </button>
-                                        <div class="mx-4 form-group dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">Option 1</a>
-                                            <a class="dropdown-item" href="#">Option 2</a>
-                                            <a class="dropdown-item" href="#">Option 3</a>
+                                        <div class="form-group">
+                                            <select class="form-select" aria-label="Default select example"
+                                                name="faculty_id">
+                                                <option value="" selected disabled>Select a Role
+                                                </option>
+                                                @foreach ($roles as $role)
+                                                    <option value="{{ $role->id }}">{{ $role->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

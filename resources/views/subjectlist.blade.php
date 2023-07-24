@@ -101,19 +101,18 @@
                                                     <input id="text" type="text" placeholder="Subject name"
                                                         class="form-control">
                                                 </div>
-                                                {{-- Faculty Name(drop down) --}}
-                                                <label for="text">Faculty Name: </label>
-                                                <button class="btn btn-primary dropdown-toggle me-1" type="button"
-                                                    id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false"
-                                                    style="width: 70%; background-color: #ffffff; border: 1px solid #dce7f1; color:#747d86">
-                                                    Faculty Name
-                                                </button>
-                                                <div class="mx-4 form-group dropdown-menu"
-                                                    aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#">Option 1</a>
-                                                    <a class="dropdown-item" href="#">Option 2</a>
-                                                    <a class="dropdown-item" href="#">Option 3</a>
+                                                {{-- Faculty --}}
+                                                <label>Faculty:</label>
+                                                <div class="form-group">
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        name="faculty_id">
+                                                        <option value="" selected disabled>Select a Faculty
+                                                        </option>
+                                                        @foreach ($faculties as $faculty)
+                                                            <option value="{{ $faculty->id }}">{{ $faculty->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                                 {{-- Lecturer Name --}}
                                                 <label for="text">Lecturer Name: </label>
@@ -193,20 +192,20 @@
                                                     <input id="text" type="text" placeholder="Subject name"
                                                         class="form-control">
                                                 </div>
-                                                {{-- Faculty Name(drop down) --}}
-                                                <label for="text">Faculty Name: </label>
-                                                <button class="btn btn-primary dropdown-toggle me-1" type="button"
-                                                    id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false"
-                                                    style="width: 70%; background-color: #ffffff; border: 1px solid #dce7f1; color:#747d86">
-                                                    Faculty Name
-                                                </button>
-                                                <div class="mx-4 form-group dropdown-menu"
-                                                    aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#">Option 1</a>
-                                                    <a class="dropdown-item" href="#">Option 2</a>
-                                                    <a class="dropdown-item" href="#">Option 3</a>
+                                                {{-- Faculty  --}}
+                                                <label>Faculty:</label>
+                                                <div class="form-group">
+                                                    <select class="form-select" aria-label="Default select example"
+                                                        name="faculty_id">
+                                                        <option value="" selected disabled>Select a Faculty
+                                                        </option>
+                                                        @foreach ($faculties as $faculty)
+                                                            <option value="{{ $faculty->id }}">{{ $faculty->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
+
                                                 {{-- Lecturer Name --}}
                                                 <label for="text">Lecturer Name: </label>
                                                 <div class="form-group">

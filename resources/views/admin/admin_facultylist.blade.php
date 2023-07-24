@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Faculty List</title>
     @include('includes.style')
 </head>
@@ -38,7 +39,31 @@
                 <section class="section">
                     <div class="col-12">
                         <div class="row">
-                            <div class="col-md-12 col-12">
+                            <div class="col-md-6 col-12">
+                                @if ($errors->any())
+                                    <div class="alert alert-light-danger color-danger">
+                                        <i class="bi bi-exclamation-circle"></i> Error:
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                    </div>
+                                @endif
+
+                                @if (session()->has('success'))
+                                    <div class="alert alert-light-success color-success">
+                                        <div class="success-message">
+                                            <i class="bi bi-check-circle"></i> {{ session('success') }}
+                                        </div>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="col-md-6 col-12">
                                 <div class="buttons" style="text-align: right;">
                                     <a class="btn btn-primary bg-blue" data-bs-toggle="modal"
                                         data-bs-target="#AddFaculty">Add New</a>
@@ -63,16 +88,18 @@
                                                 </svg>
                                             </button>
                                         </div>
-                                        <form action="#">
+                                        <form method="POST" action="{{ route('admin.facultycreate') }}">
+                                            @csrf
+                                            @method('post')
                                             <div class="modal-body">
                                                 <label for="text">Faculty Name: </label>
                                                 <div class="form-group">
-                                                    <input id="text" type="text" placeholder="Faculty name"
+                                                    <input type="text" name="name" placeholder="Faculty name"
                                                         class="form-control">
                                                 </div>
                                                 <label for="textarea">Description: </label>
                                                 <div class="form-group">
-                                                    <textarea class="form-control" id="textarea" rows="3" placeholder="Description"></textarea>
+                                                    <textarea type="textarea" name="description" class="form-control" placeholder="Description"></textarea>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -107,7 +134,7 @@
                                         <td>
                                             <div class="d-flex">
                                                 <a href="#" class="mr-2" data-bs-toggle="modal"
-                                                    data-bs-target="#EditFaculty ">
+                                                    data-bs-target="#EditFaculty{{ $faculty->id }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg"
                                                         class="bi bi-pencil-square" viewBox="0 0 16 16"
                                                         style="width: 30px; height: 30px; fill: rgb(0, 140, 255);">
@@ -119,8 +146,8 @@
                                                 </a>
 
                                                 <!-- Modal -->
-                                                <div class="modal fade text-left" id="EditFaculty" tabindex="-1"
-                                                    role="dialog" aria-labelledby="myModalLabel33"
+                                                <div class="modal fade text-left" id="EditFaculty{{ $faculty->id }}"
+                                                    tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
                                                     aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
                                                         role="document">
@@ -133,26 +160,36 @@
                                                                     <i data-feather="x"></i>
                                                                 </button>
                                                             </div>
-                                                            <form action="#">
+                                                            <form method="POST"
+                                                                action="{{ route('admin.facultyedit', ['faculty' => $faculty]) }}">
+                                                                @csrf
+                                                                @method('put')
                                                                 <div class="modal-body">
-                                                                    <label>Faculty Name:</label>
+                                                                    <label for="text">Faculty Name: </label>
                                                                     <div class="form-group">
-                                                                        <input type="text" class="form-control">
+                                                                        <input type="text" name="name"
+                                                                            placeholder="Faculty name"
+                                                                            value="{{ $faculty->name }}"
+                                                                            class="form-control">
                                                                     </div>
-                                                                    <label>Description:</label>
-                                                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                                    <label for="textarea">Description: </label>
+                                                                    <div class="form-group">
+                                                                        <textarea type="textarea" name="description" class="form-control" placeholder="Description">{{ $faculty->description }}</textarea>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                                        data-bs-dismiss="modal">Cancel</button>
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Update</button>
                                                                 </div>
                                                             </form>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <a href="#">
+                                                <a href="#" class="mr-2"
+                                                    onclick="return confirmDelete({{ $faculty->id }})">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash3"
                                                         viewBox="0 0 16 16"
                                                         style="width: 29px; height: 29px; fill: red;">
@@ -160,6 +197,7 @@
                                                             d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
                                                     </svg>
                                                 </a>
+
                                             </div>
                                         </td>
                                     </tr>
@@ -170,21 +208,17 @@
                     <div class="table-responsive dataTable-bottom">
                         <nav class="dataTable-pagination">
                             <ul class="dataTable-pagination-list pagination pagination-primary">
-                                <li class="active page-item"><a href="#" data-page="1"
-                                        class="page-link">1</a></li>
-                                <li class="page-item"><a href="#" data-page="2" class="page-link">2</a></li>
-                                <li class="page-item"><a href="#" data-page="3" class="page-link">3</a></li>
-                                <li class="pager page-item"><a href="#" data-page="2" class="page-link">›</a>
-                                </li>
+                                {{ $faculties->links('pagination::bootstrap-4') }}
                             </ul>
                         </nav>
                     </div>
                 </section>
-
             </div>
         </div>
     </div>
+
     @include('includes.script')
+
 </body>
 
 </html>

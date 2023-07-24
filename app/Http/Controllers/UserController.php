@@ -7,99 +7,69 @@ use App\Models\Role;
 use App\Models\Course;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all(); // Retrieve users from the database
-        return view('admin.admin_adminlecturerlist', compact('users'));
-
+        $users = User::paginate(5); // Retrieve users from the database
+        $faculties = Faculty::all();
+        return view('admin.admin_adminlecturerlist', compact('users', 'faculties'));
     }
+
 
     public function create()
     {
+        $roles = Role::all();
+        $faculties = Faculty::all();
         return view('admin.admin_adminlecturer_create')
-            ->with('roles', Role::all())
-            ->with('faculties', Faculty::all());
-
+            ->with('roles', $roles)
+            ->with('faculties', $faculties);
     }
 
-    public function store (Request $request)
+    public function store(Request $request)
     {
-        $request->validate([
+        // Validate the form data
+        $validatedData = $request->validate([
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'name' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'confirmed'],
             'gender' => ['required', 'in:Male,Female'],
-            'department' => ['required', 'integer', 'exists:departments,id'],
-            'file' => ['file', 'image', 'max:5120'],
-            'role' => [
-                'array',
-                'max:3'
-            ],
-            'role.*' => [
-                'nullable',
-                'integer',
-                'distinct',
-                'exists:roles,id'
-            ]
+            'faculty' => ['required', 'exists:faculties,id'],
+            'role' => ['required', 'exists:roles,id'],
         ]);
 
-        $file_path = null;
-        $file_name = null;
-
-        $create_user = User::create([
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'gender_id' => $request->gender,
-            'department_id' => $request->department,
-            'avatar_file_path' => $file_path,
-            'avatar_file_name' => $file_name,
+        // Create a new lecturer or admin record in the database
+        $user = new User([
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+            'name' => $validatedData['name'],
+            'gender' => $validatedData['gender'],
         ]);
 
-        if ($request->hasFile('file') && $request->file('file')->isValid()) {
-            $this->createFolder($this->getAvatarPath());
-            $original_file_name = $request->file('file')->getClientOriginalName();
-            $file_name = $this->createUniqueFileName($create_user->id, $original_file_name);
-            $request->file('file')->move($this->getAvatarPath(), $file_name);
+        // Save the faculty and role for the new user
+        $faculty = Faculty::findOrFail($validatedData['faculty']);
+        $role = Role::findOrFail($validatedData['role']);
 
-            // $path = 'documents';
-            // if (!File::exists($path)) {
-            //     File::makeDirectory($path, 0777, true, true);
-            // }
-            // $path .= '/avatar';
-            // if (!File::exists($path)) {
-            //     File::makeDirectory($path, 0777, true, true);
-            // }
+        $user->faculty()->associate($faculty);
+        $user->role()->associate($role);
 
-            // $random_str = Str::random(32);
-            // $time_now = Carbon::now();
-            // $write_time = $time_now->format('YmdHis');
-            // $original_file_name = $request->file('file')->getClientOriginalName();
-            // $file_name = $random_str.'_'.$write_time.'_'.$create_user->id.'_'.$original_file_name;
+        $user->save();
 
-            // $request->file('file')->move($path, $file_name);
-
-            $create_user->avatar_file_path = $this->getAvatarPath();
-            $create_user->avatar_file_name = $file_name;
-            $create_user->save();
-        }
-
-        if (is_array($request->role) && count($request->role) > 0) {
-            foreach ($request->role as $r) {
-                if (!empty($r) && $r > 0) {
-                    $create_user->user_roles()->create([
-                        'role_id' => $r
-                    ]);
-                }
-            }
-        }
-        return redirect()->route('users.show', ['user' => $create_user->id]);
+        // Redirect back to the form with a success message
+        return redirect()->back()->with('success', 'Created successfully!');
     }
 
+    public function edit()
+    {
+        $roles = Role::all();
+        $faculties = Faculty::all();
+        return view('admin.admin_adminlecturer_create')
+            ->with('roles', $roles)
+            ->with('faculties', $faculties);
+    }
 
     public function studentlist()
     {
