@@ -10,9 +10,25 @@ class Attendance extends Model
     use HasFactory;
 
     public $timestamps = true;
-    
+
     protected $fillable = [
-        'date',
         'statuses_id',
+        'user_id',
+        'class_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function class()
+    {
+        return $this->belongsTo(Classes::class, 'class_id');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'statuses_id');
+    }
 }

@@ -17,7 +17,11 @@ class Student extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $guarded = [];
+    protected $fillable = [
+        'users_id',
+        'studentId',
+        'courses_id'
+    ];
 
     /**
      * The attributes that should be hidden for serialization.

@@ -18,6 +18,14 @@
         box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
     }
 
+    @media (max-width: 767px) {
+        .buttons {
+            margin-right: 50%;
+            margin-top: 10px;
+            /* Optional spacing adjustment */
+        }
+    }
+
     .custom-button {
         background-color: #7787a7;
         color: #ffffff;
@@ -38,13 +46,30 @@
 
     .bg-blue {
         background-color: #5F618F;
+        border-color: #5F618F;
         color: white;
+    }
+
+    .btn-primary {
+        font-weight: 500;
+    }
+
+    .btn-primary:hover {
+        background-color: #5F618F;
+        box-shadow: 0 4px 4px #5F618F;
     }
 
     .btn-primary.bg-blue:hover {
         background-color: white;
         color: black;
         border-color: #5F618F;
+    }
+
+    .custom-print-button {
+        background-color: #5F618F;
+        color: #fff;
+        font-size: 18px;
+        padding: 5px 30px;
     }
 
     .card {
@@ -69,6 +94,12 @@
     }
 
     .badge.bg-success {
+        font-size: 1em;
+        padding: 0.2em 0.5em;
+        border-radius: 0.3em;
+    }
+
+    .badge.bg-danger {
         font-size: 1em;
         padding: 0.2em 0.5em;
         border-radius: 0.3em;
@@ -225,5 +256,19 @@
         right: 5px;
         top: 50%;
         transform: translateY(-50%);
+    }
+
+    /* QR code Moda */
+    .qrcode-label {
+        font-size: 18px;
+        font-weight: 700;
+        color: #088395;
+    }
+
+    .qrcode-text {
+        font-size: 25px;
+        font-weight: 700;
+        color: #000000;
+        margin-top: -2%;
     }
 </style>

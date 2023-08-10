@@ -38,7 +38,6 @@
             <div class="page-heading">
                 <h2>Student List</h2>
             </div>
-
             <div class="page-content">
                 <section class="section">
                     <div class="col-12">
@@ -73,15 +72,19 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white">
+                                <?php
+                                $num = 1;
+                                ?>
                                 @foreach ($users as $user)
                                     @if ($user->roles_id === 3)
                                         <tr>
-                                            <td class="text-bold-700">1</td>
+                                            <td class="text-bold-700">{{ $num }}</td>
+                                            <?php
+                                            $num++;
+                                            ?>
                                             <td class="text-bold-500">
                                                 @if ($user->student)
                                                     {{ $user->student->studentId }}
-                                                @else
-                                                    N/A
                                                 @endif
                                             </td>
                                             <td class="text-bold-500">{{ $user->name }}</td>
@@ -90,24 +93,21 @@
                                             <td class="text-bold-500">
                                                 @if ($user->student)
                                                     {{ $user->student->course->name }}
-                                                @else
-                                                    N/A
                                                 @endif
                                             </td>
                                             <td>{{ $user->role->name }}</td>
                                             <td>
                                                 <div class="d-flex">
-                                                    <a href="{{ route('admin.student_edit') }}" class="mr-2">
+                                                    <a href="{{ route('profileStudent', ['user' => $user]) }}" class="mr-2">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
-                                                            class="bi bi-pencil-square" viewBox="0 0 16 16"
-                                                            style="width: 30px; height: 30px; fill: currentColor;">
+                                                            class="bi bi-person-vcard-fill" viewBox="0 0 16 16"
+                                                            style="width: 30px; height: 30px; fill: #00024a;">
                                                             <path
-                                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                                            <path fill-rule="evenodd"
-                                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                                d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm9 1.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4a.5.5 0 0 0-.5.5ZM9 8a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 0-1h-4A.5.5 0 0 0 9 8Zm1 2.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0-.5.5Zm-1 2C9 10.567 7.21 9 5 9c-2.086 0-3.8 1.398-3.984 3.181A1 1 0 0 0 2 13h6.96c.026-.163.04-.33.04-.5ZM7 6a2 2 0 1 0-4 0 2 2 0 0 0 4 0Z" />
                                                         </svg>
                                                     </a>
-                                                    <a href="#">
+                                                    <a href="#" class="mr-2"
+                                                        onclick="return confirmDelete3('{{ $user->id }}')">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash3"
                                                             viewBox="0 0 16 16"
                                                             style="width: 29px; height: 29px; fill: red;">
@@ -126,15 +126,11 @@
                     <div class="table-responsive dataTable-bottom">
                         <nav class="dataTable-pagination">
                             <ul class="dataTable-pagination-list pagination pagination-primary">
-                                <li class="active page-item"><a href="#" data-page="1" class="page-link">1</a>
-                                </li>
-                                <li class="page-item"><a href="#" data-page="2" class="page-link">2</a></li>
-                                <li class="page-item"><a href="#" data-page="3" class="page-link">3</a></li>
-                                <li class="pager page-item"><a href="#" data-page="2" class="page-link">›</a>
-                                </li>
+                                {{ $users->links('pagination::bootstrap-4') }}
                             </ul>
                         </nav>
                     </div>
+
             </div>
         </div>
         </section>

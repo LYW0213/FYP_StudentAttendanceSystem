@@ -23,7 +23,7 @@
                         {{-- Admin --}}
                         @if (Auth::user()->roles_id == 1)
                             <li class="sidebar-item">
-                                <a href="{{ route('admin.dashboard') }}" class="sidebar-link">
+                                <a href="{{ route('dashboard') }}" class="sidebar-link">
                                     <i class="bi bi-grid-fill"></i>
                                     <span>Dashboard</span>
                                 </a>
@@ -32,7 +32,7 @@
                             {{-- Lecturer --}}
                         @elseif (Auth::user()->roles_id == 2)
                             <li class="sidebar-item">
-                                <a href="{{ route('lecturer.dashboard') }}" class="sidebar-link">
+                                <a href="{{ route('dashboard') }}" class="sidebar-link">
                                     <i class="bi bi-grid-fill"></i>
                                     <span>Dashboard</span>
                                 </a>
@@ -40,7 +40,7 @@
                             {{-- Student --}}
                         @else
                             <li class="sidebar-item">
-                                <a href="{{ route('student.dashboard') }}" class="sidebar-link">
+                                <a href="{{ route('dashboard') }}" class="sidebar-link">
                                     <i class="bi bi-grid-fill"></i>
                                     <span>Dashboard</span>
                                 </a>
@@ -89,7 +89,7 @@
                         {{-- Admin --}}
                         @if (Auth::user()->roles_id == 1)
                             <li class="sidebar-item">
-                                <a href="{{ route('admin.subjectlist') }}" class='sidebar-link'>
+                                <a href="{{ route('subjectlist') }}" class='sidebar-link'>
                                     <i class="bi bi-grid-1x2-fill"></i>
                                     <span>Subject List</span>
                                 </a>

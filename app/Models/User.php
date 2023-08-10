@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'name',
         'gender',
+        'password',
         'roles_id',
         'faculties_id',
         'photo',
@@ -63,10 +64,15 @@ class User extends Authenticatable
         return $this->belongsTo(Faculty::class, 'faculties_id');
     }
 
+
     public function course()
     {
         return $this->belongsTo(Course::class, 'courses_id');
     }
 
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'user_id');
+    }
 
 }

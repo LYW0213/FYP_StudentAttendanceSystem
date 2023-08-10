@@ -15,7 +15,7 @@ class Subject extends Model
         'subjectCode',
         'subjectName',
         'users_id',
-        'faculty_id',
+        'faculties_id',
         'courses_id',
     ];
 
@@ -24,9 +24,19 @@ class Subject extends Model
         return $this->belongsTo(Faculty::class, 'faculties_id');
     }
 
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'courses_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'users_id');
+    }
+
+    public function classes()
+    {
+        return $this->hasMany(Classes::class, 'subject_id');
     }
 
 

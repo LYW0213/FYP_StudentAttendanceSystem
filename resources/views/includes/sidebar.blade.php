@@ -89,7 +89,7 @@
                         {{-- Admin --}}
                         @if (Auth::user()->roles_id == 1)
                             <li class="sidebar-item">
-                                <a href="{{ route('admin.subjectlist') }}" class='sidebar-link'>
+                                <a href="{{ route('subjectlist') }}" class='sidebar-link'>
                                     <i class="bi bi-grid-1x2-fill"></i>
                                     <span>Subject List</span>
                                 </a>
@@ -98,7 +98,7 @@
                         {{-- Lecturer --}}
                         @elseif (Auth::user()->roles_id == 2)
                             <li class="sidebar-item">
-                                <a href="{{ route('lecturer.subjectlist') }}" class='sidebar-link'>
+                                <a href="{{ route('subjectlist') }}" class='sidebar-link'>
                                     <i class="bi bi-grid-1x2-fill"></i>
                                     <span>Subject List</span>
                                 </a>

@@ -13,14 +13,22 @@ class Classes extends Model
 
     protected $fillable = [
         'name',
+        'venue',
         'day',
         'start',
         'end',
-        'faculty_id',
-        'courses_id',
-        'venue_id',
-        'subjects_id',
+        'qr_code',
+        'subject_id',
     ];
 
-    
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class, 'subject_id');
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'class_id');
+    }
 }

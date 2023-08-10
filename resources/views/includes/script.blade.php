@@ -1,10 +1,9 @@
 <script src="{{ asset('Template/assets/js/bootstrap.js') }}"></script>
 <script src="{{ asset('Template/assets/js/app.js') }}"></script>
 
-<script src="{{ asset('Template/assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
-<script src="{{ asset('Template/assets/js/pages/simple-datatables.js') }}"></script>
-
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+
 
 
 <script>
@@ -30,7 +29,7 @@
             if (studentId.includes(searchText) || name.includes(searchText) || email.includes(
                     searchText) ||
                 faculty.includes(searchText) || course.includes(searchText) || role.includes(searchText)
-                ) {
+            ) {
                 row.style.display = 'table-row';
             } else {
                 row.style.display = 'none';
@@ -38,44 +37,168 @@
         });
     });
 
-    // Script for delete alert
+    // Script for delete alert for faculty
     function confirmDelete(facultyId) {
-            // Show the delete confirmation dialog using the built-in window.confirm() method
-            var result = confirm("Are you sure you want to delete this faculty?");
+        // Show the delete confirmation dialog using the built-in window.confirm() method
+        var result = confirm("Are you sure you want to delete this faculty?");
 
-            // If the user clicks "OK" in the confirmation dialog, proceed with the delete action
-            if (result) {
-                // Build the URL for the delete action using the facultyId
-                var deleteUrl = "{{ route('admin.facultydelete', ':facultyId') }}";
-                deleteUrl = deleteUrl.replace(':facultyId', facultyId);
+        // If the user clicks "OK" in the confirmation dialog, proceed with the delete action
+        if (result) {
+            // Build the URL for the delete action using the facultyId
+            var deleteUrl = "{{ route('admin.facultydelete', ':facultyId') }}";
+            deleteUrl = deleteUrl.replace(':facultyId', facultyId);
 
-                // Create a hidden form to perform the delete action via POST method
-                var form = document.createElement('form');
-                form.method = 'POST';
-                form.action = deleteUrl;
-                form.style.display = 'none';
+            // Create a hidden form to perform the delete action via POST method
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = deleteUrl;
+            form.style.display = 'none';
 
-                // Add CSRF token to the form (if you're using CSRF protection)
-                var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                var csrfInput = document.createElement('input');
-                csrfInput.setAttribute('type', 'hidden');
-                csrfInput.setAttribute('name', '_token');
-                csrfInput.setAttribute('value', csrfToken);
-                form.appendChild(csrfInput);
+            // Add CSRF token to the form (if you're using CSRF protection)
+            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            var csrfInput = document.createElement('input');
+            csrfInput.setAttribute('type', 'hidden');
+            csrfInput.setAttribute('name', '_token');
+            csrfInput.setAttribute('value', csrfToken);
+            form.appendChild(csrfInput);
 
-                // Add a method override input to support DELETE method
-                var methodInput = document.createElement('input');
-                methodInput.setAttribute('type', 'hidden');
-                methodInput.setAttribute('name', '_method');
-                methodInput.setAttribute('value', 'DELETE');
-                form.appendChild(methodInput);
+            // Add a method override input to support DELETE method
+            var methodInput = document.createElement('input');
+            methodInput.setAttribute('type', 'hidden');
+            methodInput.setAttribute('name', '_method');
+            methodInput.setAttribute('value', 'DELETE');
+            form.appendChild(methodInput);
 
-                // Append the form to the document body and submit it
-                document.body.appendChild(form);
-                form.submit();
-            }
-
-            // Return false to prevent the link from being followed if the user clicks "Cancel"
-            return false;
+            // Append the form to the document body and submit it
+            document.body.appendChild(form);
+            form.submit();
         }
+
+        // Return false to prevent the link from being followed if the user clicks "Cancel"
+        return false;
+    }
+
+    // Script for delete alert for program
+    function confirmDelete1(ProgramId) {
+        // Show the delete confirmation dialog using the built-in window.confirm() method
+        var result = confirm("Are you sure you want to delete this program?");
+
+        // If the user clicks "OK" in the confirmation dialog, proceed with the delete action
+        if (result) {
+            console.log("testing");
+            // Build the URL for the delete action using the facultyId
+            var deleteUrl = "{{ route('admin.programdelete', ':programId') }}";
+            deleteUrl = deleteUrl.replace(':programId', ProgramId);
+
+            // Create a hidden form to perform the delete action via POST method
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = deleteUrl;
+            form.style.display = 'none';
+
+            // Add CSRF token to the form (if you're using CSRF protection)
+            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            var csrfInput = document.createElement('input');
+            csrfInput.setAttribute('type', 'hidden');
+            csrfInput.setAttribute('name', '_token');
+            csrfInput.setAttribute('value', csrfToken);
+            form.appendChild(csrfInput);
+
+            // Add a method override input to support DELETE method
+            var methodInput = document.createElement('input');
+            methodInput.setAttribute('type', 'hidden');
+            methodInput.setAttribute('name', '_method');
+            methodInput.setAttribute('value', 'DELETE');
+            form.appendChild(methodInput);
+
+            // Append the form to the document body and submit it
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        // Return false to prevent the link from being followed if the user clicks "Cancel"
+        return false;
+    }
+
+    // Script for delete alert for User
+    function confirmDelete2(UserId) {
+        // Show the delete confirmation dialog using the built-in window.confirm() method
+        var result = confirm("Are you sure you want to delete this user?");
+
+        // If the user clicks "OK" in the confirmation dialog, proceed with the delete action
+        if (result) {
+            console.log("testing");
+            // Build the URL for the delete action using the facultyId
+            var deleteUrl = "{{ route('admin.adminlecturer_delete', ':userId') }}";
+            deleteUrl = deleteUrl.replace(':userId', UserId);
+
+            // Create a hidden form to perform the delete action via POST method
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = deleteUrl;
+            form.style.display = 'none';
+
+            // Add CSRF token to the form (if you're using CSRF protection)
+            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            var csrfInput = document.createElement('input');
+            csrfInput.setAttribute('type', 'hidden');
+            csrfInput.setAttribute('name', '_token');
+            csrfInput.setAttribute('value', csrfToken);
+            form.appendChild(csrfInput);
+
+            // Add a method override input to support DELETE method
+            var methodInput = document.createElement('input');
+            methodInput.setAttribute('type', 'hidden');
+            methodInput.setAttribute('name', '_method');
+            methodInput.setAttribute('value', 'DELETE');
+            form.appendChild(methodInput);
+
+            // Append the form to the document body and submit it
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        // Return false to prevent the link from being followed if the user clicks "Cancel"
+        return false;
+    }
+
+    function confirmDeleteSubject(subjectId) {
+        // Show the delete confirmation dialog using the built-in window.confirm() method
+        var result = confirm("Are you sure you want to delete this subject?");
+
+        // If the user clicks "OK" in the confirmation dialog, proceed with the delete action
+        if (result) {
+            // Build the URL for the delete action using the facultyId
+            var deleteUrl = "{{ route('subjectdelete', ':subjectId') }}";
+            deleteUrl = deleteUrl.replace(':subjectId', subjectId);
+
+            // Create a hidden form to perform the delete action via POST method
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = deleteUrl;
+            form.style.display = 'none';
+
+            // Add CSRF token to the form (if you're using CSRF protection)
+            var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            var csrfInput = document.createElement('input');
+            csrfInput.setAttribute('type', 'hidden');
+            csrfInput.setAttribute('name', '_token');
+            csrfInput.setAttribute('value', csrfToken);
+            form.appendChild(csrfInput);
+
+            // Add a method override input to support DELETE method
+            var methodInput = document.createElement('input');
+            methodInput.setAttribute('type', 'hidden');
+            methodInput.setAttribute('name', '_method');
+            methodInput.setAttribute('value', 'DELETE');
+            form.appendChild(methodInput);
+
+            // Append the form to the document body and submit it
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        // Return false to prevent the link from being followed if the user clicks "Cancel"
+        return false;
+    }
 </script>

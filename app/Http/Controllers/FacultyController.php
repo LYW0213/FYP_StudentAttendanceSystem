@@ -13,7 +13,7 @@ class FacultyController extends Controller
     public function index()
     {
 
-        $faculties = Faculty::paginate(5);
+        $faculties = Faculty::paginate(10);
         return view('admin.admin_facultylist', ['faculties' => $faculties]);
 
     }
@@ -46,5 +46,6 @@ class FacultyController extends Controller
         $faculty->delete();
         return redirect()->route('admin.facultylist')->with('success', 'Faculty Deleted Successfully!');
     }
+
 
 }

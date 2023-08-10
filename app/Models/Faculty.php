@@ -18,8 +18,14 @@ class Faculty extends Model
         'description',
     ];
 
-    public function faculty()
+    public function courses()
     {
-        return $this->belongsTo(Faculty::class, 'faculties_id');
+        return $this->hasMany(Course::class, 'faculties_id');
+
+    }
+    
+    public function users()
+    {
+        return $this->hasMany(User::class, 'faculties_id');
     }
 }

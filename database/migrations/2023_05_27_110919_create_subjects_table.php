@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('subjectCode')->unique;
             $table->string('subjectName');
-            $table->integer('hours');
             $table->unsignedBigInteger('users_id');
             $table->unsignedBigInteger('faculties_id');
             $table->unsignedBigInteger('courses_id');

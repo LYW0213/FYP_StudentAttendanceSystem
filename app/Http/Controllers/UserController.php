@@ -8,76 +8,80 @@ use App\Models\Course;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 
 class UserController extends Controller
 {
-    public function index()
+    public function adminlecturer_index()
     {
-        $users = User::paginate(5); // Retrieve users from the database
-        $faculties = Faculty::all();
-        return view('admin.admin_adminlecturerlist', compact('users', 'faculties'));
+        $users = User::paginate(10);
+        return view('admin.admin_adminlecturerlist', compact('users'));
+
     }
 
-
-    public function create()
+    public function Adminlecturer_create()
     {
-        $roles = Role::all();
         $faculties = Faculty::all();
-        return view('admin.admin_adminlecturer_create')
-            ->with('roles', $roles)
-            ->with('faculties', $faculties);
-    }
+        $roles = Role::whereNot('id', 3)->get();
+        return view('admin.admin_adminlecturer_create', compact('faculties', 'roles'));
 
-    public function store(Request $request)
+    } //End Method
+
+
+    public function Adminlecturer_store(Request $request)
     {
-        // Validate the form data
-        $validatedData = $request->validate([
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'name' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'confirmed'],
-            'gender' => ['required', 'in:Male,Female'],
-            'faculty' => ['required', 'exists:faculties,id'],
-            'role' => ['required', 'exists:roles,id'],
+        $data = $request->validate([
+            'image' => ['file', 'image', 'max:5120'],
+            'name' => 'required|string',
+            'email' => 'required|string|email|unique:users,email',
+            'gender' => [
+                'required',
+                Rule::in(['Male', 'Female']),
+            ],
+            'password' => 'required|string',
+            'faculty_id' => 'required|exists:faculties,id',
+            'role_id' => 'required|exists:roles,id',
         ]);
 
-        // Create a new lecturer or admin record in the database
-        $user = new User([
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
-            'name' => $validatedData['name'],
-            'gender' => $validatedData['gender'],
+        $image = null;
+
+        $newUser = User::create([
+            'photo' => $image,
+            'name' => $request->name,
+            'email' => $request->email,
+            'gender' => $request->gender,
+            'password' => Hash::make($request->password),
+            'faculties_id' => $request->faculty_id,
+            'roles_id' => $request->role_id,
+
         ]);
 
-        // Save the faculty and role for the new user
-        $faculty = Faculty::findOrFail($validatedData['faculty']);
-        $role = Role::findOrFail($validatedData['role']);
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $this->createFolder($this->userimage);
+            $original_file_name = $request->file('image')->getClientOriginalName();
+            $file_name = $this->createUniqueFileName($newUser->id, $original_file_name);
+            $request->file('image')->move($this->userimage, $file_name);
 
-        $user->faculty()->associate($faculty);
-        $user->role()->associate($role);
+            $newUser->photo = $file_name;
+            $newUser->save();
+        }
 
-        $user->save();
+        return redirect()->route('admin.adminlecturerlist')->with('success', 'User Added Successfully!');
 
-        // Redirect back to the form with a success message
-        return redirect()->back()->with('success', 'Created successfully!');
-    }
+    } //End Method
 
-    public function edit()
+
+    public function profile(User $user)
     {
-        $roles = Role::all();
-        $faculties = Faculty::all();
-        return view('admin.admin_adminlecturer_create')
-            ->with('roles', $roles)
-            ->with('faculties', $faculties);
+        $users = User::all();
+        return view('profile', compact('user','users'));
     }
 
-    public function studentlist()
+    public function destroy(User $user)
     {
+        $user->delete();
 
-        $users = User::with('student')->get(); // Eager load the student relationship
-        return view('admin.admin_studentlist', compact('users'));
+        return redirect()->route('admin.adminlecturerlist')->with('success', 'User Deleted Successfully!');
     }
-
-
-    // Add other methods for creating, updating, and deleting users if needed...
 }

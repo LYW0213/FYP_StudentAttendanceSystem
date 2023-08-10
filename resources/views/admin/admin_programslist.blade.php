@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Programs List</title>
 
     @include('includes.style')
@@ -123,9 +124,15 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn"
-                                                    data-bs-dismiss="modal">Cancel</button>
-                                                <button type="submit" class="btn btn-primary">Add</button>
+                                                <button type="button" class="btn btn-light-secondary"
+                                                    data-bs-dismiss="modal">
+                                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                                    <span class="d-none d-sm-block">Close</span>
+                                                </button>
+                                                <button type="submit" class="btn btn-primary bg-blue ms-1">
+                                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                                    <span class="d-none d-sm-block">ADD</span>
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -141,15 +148,23 @@
                     <thead class="bg-blue">
                         <tr>
                             <th scope="col">No</th>
+                            <th scope="col">Faculty</th>
                             <th scope="col">Programs</th>
                             <th scope="col">Description</th>
                             <th scope="col">ACTION</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white">
+                        <?php
+                        $num = 1;
+                        ?>
                         @foreach ($courses as $course)
                             <tr>
-                                <td class="text-bold-700">{{ $course->id }}</td>
+                                <td class="text-bold-700">{{ $num }}</td>
+                                <?php
+                                $num++;
+                                ?>
+                                <td class="text-bold-500">{{ $course->faculty->name }}</td>
                                 <td class="text-bold-500">{{ $course->name }}</td>
                                 <td>{{ $course->description }}</td>
                                 <td>
@@ -157,8 +172,7 @@
                                         <a href="#" class="mr-2" data-bs-toggle="modal"
                                             data-bs-target="#EditFaculty{{ $course->id }} ">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-pencil-square"
-                                                viewBox="0 0 16 16"
-                                                style="width: 30px; height: 30px; fill: rgb(0, 140, 255);">
+                                                viewBox="0 0 16 16" style="width: 30px; height: 30px; fill: #00024a;">
                                                 <path
                                                     d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                                 <path fill-rule="evenodd"
@@ -183,33 +197,52 @@
                                                     </div>
                                                     <form method="POST"
                                                         action="{{ route('admin.programedit', ['program' => $course->id]) }}">
-
-
                                                         @csrf
-                                                        @method('put')
+                                                        @method('PUT')
                                                         <div class="modal-body">
                                                             <label>Program Name:</label>
                                                             <div class="form-group">
                                                                 <input type="text" class="form-control"
-                                                                    value="{{ $course->name }}">
+                                                                    name="name" value="{{ $course->name }}">
+                                                            </div>
+
+                                                            <label>Faculty:</label>
+                                                            <div class="form-group">
+                                                                <select class="form-select"
+                                                                    aria-label="Default select example"
+                                                                    name="faculty_id">
+                                                                    <option value="">Select a Faculty</option>
+                                                                    @foreach ($faculties as $faculty)
+                                                                        <option
+                                                                            @if ($course->faculties_id == $faculty->id) selected @endif
+                                                                            value="{{ $faculty->id }}">
+                                                                            {{ $faculty->name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
                                                             </div>
 
                                                             <label>Description:</label>
-                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">{{ $course->description }}</textarea>
-
+                                                            <textarea class="form-control" id="exampleFormControlTextarea1" name="description" rows="3">{{ $course->description }}</textarea>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn"
-                                                                data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-light-secondary"
+                                                                data-bs-dismiss="modal">
+                                                                <i class="bx bx-x d-block d-sm-none"></i>
+                                                                <span class="d-none d-sm-block">Close</span>
+                                                            </button>
                                                             <button type="submit"
-                                                                class="btn btn-primary">Save</button>
+                                                                class="btn btn-primary bg-blue ms-1">
+                                                                <i class="bx bx-check d-block d-sm-none"></i>
+                                                                <span class="d-none d-sm-block">SAVE</span>
+                                                            </button>
                                                         </div>
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                         <a href="#" class="mr-2"
-                                            onclick="return confirmDelete({{ $course->id }})">
+                                            onclick="return confirmDelete1({{ $course->id }})">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash3"
                                                 viewBox="0 0 16 16" style="width: 29px; height: 29px; fill: red;">
                                                 <path

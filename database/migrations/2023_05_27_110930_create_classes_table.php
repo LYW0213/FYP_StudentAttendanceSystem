@@ -14,19 +14,16 @@ return new class extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique;
+            $table->text('qr_code')->nullable();
+            $table->string('venue');
             $table->date('day');
             $table->time('start');
             $table->time('end');
-            $table->unsignedBigInteger('faculties_id');
-            $table->unsignedBigInteger('courses_id');
-            $table->unsignedBigInteger('venues_id');
-            $table->unsignedBigInteger('subjects_id');
+            $table->string('password');
+            $table->unsignedBigInteger('subject_id');
             $table->timestamps();
 
-            $table->foreign('faculties_id')->references('id')->on('faculties');
-            $table->foreign('courses_id')->references('id')->on('courses');
-            $table->foreign('venues_id')->references('id')->on('venues');
-            $table->foreign('subjects_id')->references('id')->on('subjects');
+            $table->foreign('subject_id')->references('id')->on('subjects');
         });
     }
 

@@ -103,9 +103,15 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn"
-                                                    data-bs-dismiss="modal">Cancel</button>
-                                                <button type="submit" class="btn btn-primary">Add</button>
+                                                <button type="button" class="btn btn-light-secondary"
+                                                    data-bs-dismiss="modal">
+                                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                                    <span class="d-none d-sm-block">Close</span>
+                                                </button>
+                                                <button type="submit" class="btn btn-primary bg-blue ms-1">
+                                                    <i class="bx bx-check d-block d-sm-none"></i>
+                                                    <span class="d-none d-sm-block">ADD</span>
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -126,9 +132,15 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white">
+                                <?php
+                                $num = 1;
+                                ?>
                                 @foreach ($faculties as $faculty)
                                     <tr>
-                                        <td class="text-bold-700">{{ $faculty->id }}</td>
+                                        <td class="text-bold-700">{{ $num }}</td>
+                                        <?php
+                                        $num++;
+                                        ?>
                                         <td>{{ $faculty->name }}</td>
                                         <td>{{ $faculty->description }}</td>
                                         <td>
@@ -137,7 +149,7 @@
                                                     data-bs-target="#EditFaculty{{ $faculty->id }}">
                                                     <svg xmlns="http://www.w3.org/2000/svg"
                                                         class="bi bi-pencil-square" viewBox="0 0 16 16"
-                                                        style="width: 30px; height: 30px; fill: rgb(0, 140, 255);">
+                                                        style="width: 30px; height: 30px; fill: #00024a">
                                                         <path
                                                             d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                                         <path fill-rule="evenodd"
@@ -178,10 +190,15 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn"
-                                                                        data-bs-dismiss="modal">Cancel</button>
-                                                                    <button type="submit"
-                                                                        class="btn btn-primary">Update</button>
+                                                                    <button type="button" class="btn btn-light-secondary"
+                                                                        data-bs-dismiss="modal">
+                                                                        <i class="bx bx-x d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">Close</span>
+                                                                    </button>
+                                                                    <button type="submit" class="btn btn-primary bg-blue ms-1">
+                                                                        <i class="bx bx-check d-block d-sm-none"></i>
+                                                                        <span class="d-none d-sm-block">SAVE</span>
+                                                                    </button>
                                                                 </div>
                                                             </form>
                                                         </div>

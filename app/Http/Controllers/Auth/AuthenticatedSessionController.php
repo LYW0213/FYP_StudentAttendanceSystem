@@ -40,10 +40,10 @@ class AuthenticatedSessionController extends Controller
             $request->session()->regenerate();
 
             if(Auth::user()->roles_id == 1){
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('dashboard');
             }
             else if(Auth::user()->roles_id == 2){
-                return redirect()->route('lecturer.dashboard');
+                return redirect()->route('dashboard');
             }else{
                 return redirect()->intended('/dashboard');
             }

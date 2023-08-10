@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use App\Models\Classes;
+use Carbon\Carbon;
 
-class LecturerController extends Controller
+class DashboardController extends Controller
 {
-    public function LecturerDashboard(){
-
+    public function dashboard()
+    {
         $classes = Classes::all(); // Retrieve class data from the model
 
         $activeClassesCount = 0; // Initialize the count of active classes
@@ -24,12 +24,6 @@ class LecturerController extends Controller
         }
 
         return view('dashboard', compact('activeClassesCount'));
-
     }
 
-    public function Attendancelist(){
-
-        return view('attendance_list');
-
-    }//End Method
 }

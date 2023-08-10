@@ -13,15 +13,6 @@
 <body>
     <div id="sidebar" class="active">
         <div class="sidebar-wrapper active">
-            <div class="sidebar-header position-relative">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="logo">
-                        <a href="index.html"><img src="assets/images/logo/logo.svg" alt="Logo" srcset=""></a>
-                    </div>
-                    <div class="theme-toggle d-flex gap-2  align-items-center mt-2" id="toggle-dark">
-                    </div>
-                </div>
-            </div>
             @include('includes.sidebar')
         </div>
     </div>
@@ -129,7 +120,7 @@
                                     Subject
                                 </h5>
                                 <div class="d-grid gap-4">
-                                    <a href="{{ route('admin.subjectlist') }}">
+                                    <a href="{{ route('subjectlist') }}">
                                         <button class="btn custom-button rounded-pill custom-long-button"
                                             type="button">More
                                             Info</button>
@@ -156,7 +147,7 @@
                                     Subject
                                 </h5>
                                 <div class="d-grid gap-4">
-                                    <a href="{{ route('lecturer.subjectlist') }}">
+                                    <a href="{{ route('subjectlist') }}">
                                         <button class="btn custom-button rounded-pill custom-long-button"
                                             type="button">More
                                             Info</button>
@@ -203,7 +194,7 @@
                         <div class="card-body px-5 py-4-5">
                             <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                 <h2 class="font-bold mb-0">
-                                    100
+                                    {{ $activeClassesCount }}
                                 </h2>
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
@@ -211,7 +202,7 @@
                                     On-Going Classes
                                 </h5>
                                 <div class="d-grid gap-4">
-                                    <a href="{{ route('admin.classeslist') }}">
+                                    <a href="{{ route('subjectlist') }}">
                                         <button class="btn custom-button rounded-pill custom-long-button"
                                             type="button">More
                                             Info</button>
@@ -229,7 +220,7 @@
                         <div class="card-body px-5 py-4-5">
                             <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                 <h2 class="font-bold mb-0">
-                                    100
+                                    {{ $activeClassesCount }}
                                 </h2>
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
@@ -237,7 +228,7 @@
                                     On-Going Classes
                                 </h5>
                                 <div class="d-grid gap-4">
-                                    <a href="{{ route('lecturer.classeslist') }}">
+                                    <a href="{{ route('subjectlist') }}">
                                         <button class="btn custom-button rounded-pill custom-long-button"
                                             type="button">More
                                             Info</button>
@@ -256,7 +247,7 @@
                         <div class="card-body px-5 py-4-5">
                             <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
                                 <h2 class="font-bold mb-0">
-                                    100
+                                    {{ $activeClassesCount }}
                                 </h2>
                             </div>
                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
@@ -264,7 +255,7 @@
                                     On-Going Classes
                                 </h5>
                                 <div class="d-grid gap-4">
-                                    <a href="{{ route('classeslist') }}">
+                                    <a href="{{ route('subjectlist') }}">
                                         <button class="btn custom-button rounded-pill custom-long-button"
                                             type="button">More
                                             Info</button>
