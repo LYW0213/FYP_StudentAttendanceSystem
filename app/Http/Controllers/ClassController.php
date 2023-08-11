@@ -49,12 +49,11 @@ class ClassController extends Controller
 
     public function attendance(Request $request, Classes $class)
     {
-
         $message = [];
+
         if (!($class->password == $request->password)) {
             $message['message'] = "Attend Fail";
             $message['status'] = "Error";
-
         } else {
             // Check if the user already has an attendance status for this class
             $existingAttendance = $class->attendances()->where('user_id', $request->user()->id)->first();
@@ -64,44 +63,45 @@ class ClassController extends Controller
                 $message['message'] = "You've already taken attendance for this class.";
                 $message['status'] = "Error";
             } else {
-                $starttime = Carbon::createFromFormat('Y-m-d H:i:s', $class->day . ' ' . $class->start, '+08:00');
-                $endtime = Carbon::createFromFormat('Y-m-d H:i:s', $class->day . ' ' . $class->end, '+08:00');
+                $starttime = Carbon::createFromFormat('Y-m-d H:i:s', $class->day . ' ' . $class->start);
+                $endtime = Carbon::createFromFormat('Y-m-d H:i:s', $class->day . ' ' . $class->end);
                 $currenttime = now();
+
                 if ($request->user()->roles_id == 3) {
                     if ($currenttime < $starttime) {
-                        $class->attendances()->firstOrCreate(['statuses_id' => 1, 'user_id' => $request->user()->id]);
+                        // Attend on time
+                        $class->attendances()->create(['statuses_id' => 1, 'user_id' => $request->user()->id]);
                         $message['message'] = "Attend Successfully";
                         $message['status'] = "success";
-
                     } else if ($currenttime >= $starttime && $currenttime <= $endtime) {
-
-                        if ($currenttime->addMinutes(30) <= $starttime) {
-                            // If current time + 30 minutes is still before the start time
-                            $class->attendances()->firstOrCreate(['statuses_id' => 1, 'user_id' => $request->user()->id]);
+                        if ($currenttime->diffInMinutes($starttime) <= 10) {
+                            // Attend within 10 minutes of start time
+                            $class->attendances()->create(['statuses_id' => 1, 'user_id' => $request->user()->id]);
                             $message['message'] = "Attend Successfully";
                             $message['status'] = "success";
                         } else {
-                            // If current time + 30 minutes is after the start time
-                            $class->attendances()->firstOrCreate(['statuses_id' => 3, 'user_id' => $request->user()->id]);
+                            // Late attendance
+                            $class->attendances()->create(['statuses_id' => 3, 'user_id' => $request->user()->id]);
                             $message['message'] = "You're Late";
                             $message['status'] = "Error";
                         }
                     } else if ($currenttime > $endtime) {
-                        $class->attendances()->firstOrCreate(['statuses_id' => 2, 'user_id' => $request->user()->id]);
+                        // Absent
+                        $class->attendances()->create(['statuses_id' => 2, 'user_id' => $request->user()->id]);
                         $message['message'] = "Absent";
                         $message['status'] = "Error";
-
                     }
                 } else {
-                    $message['message'] = "You're not student";
+                    $message['message'] = "You're not a student";
                     $message['status'] = "Error";
                 }
             }
-
-            return redirect()->route('attendanceview', ['class' => $class])->with($message);
-
         }
+
+        return redirect()->route('attendanceview', ['class' => $class])->with($message);
     }
+
+
 
     public function view(Request $request, Classes $class)
     {

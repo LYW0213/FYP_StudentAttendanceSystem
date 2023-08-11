@@ -33,17 +33,7 @@ class SubjectController extends Controller
                     }
                 },
             ],
-            'subjectName' => [
-                'required',
-                'string',
-                function ($attribute, $value, $fail) {
-                    // Convert the subjectName to uppercase
-                    $uppercaseName = strtoupper($value);
-                    if ($value !== $uppercaseName) {
-                        $fail('The '.$attribute.' must be in capital letters.');
-                    }
-                },
-            ],
+            'subjectName' => 'required|string',
             'faculty_id' => 'required|exists:faculties,id',
             'course_id' => 'required|exists:courses,id',
             'users_id' => 'required',

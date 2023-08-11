@@ -6,12 +6,17 @@
         <div id="sidebar" class="active">
             <div class="sidebar-wrapper active">
                 <div class="sidebar-header position-relative">
-                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="justify-content-between align-items-center theme-toggle" style="margin-bottom: -25%">
                         <div class="logo">
                             <a><img src="{{ asset('Template/assets/images/logo/Logo.png') }}" alt="Logo"
                                     srcset="" style="width: 100%; height: 100%"></a>
-                        </div>
-                        <div class="theme-toggle d-flex gap-2 align-items-center mt-2" id="toggle-dark">
+                            <button id="toggle-dark" class="btn btn-toggle-dark">
+                            </button>
+                            <div class="sidebar-toggler x">
+                                <a href="#" class="sidebar-hide d-xl-none d-block"><i
+                                        class="bi bi-x bi-middle"></i></a>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -23,7 +28,7 @@
                         {{-- Admin --}}
                         @if (Auth::user()->roles_id == 1)
                             <li class="sidebar-item active">
-                                <a href="{{ route('dashboard') }}" class="sidebar-link">
+                                <a href="{{ route('admin.dashboard') }}" class="sidebar-link">
                                     <i class="bi bi-grid-fill"></i>
                                     <span>Dashboard</span>
                                 </a>
@@ -32,7 +37,7 @@
                             {{-- Lecturer --}}
                         @elseif (Auth::user()->roles_id == 2)
                             <li class="sidebar-item active">
-                                <a href="{{ route('dashboard') }}" class="sidebar-link">
+                                <a href="{{ route('lecturer.dashboard') }}" class="sidebar-link">
                                     <i class="bi bi-grid-fill"></i>
                                     <span>Dashboard</span>
                                 </a>
@@ -40,7 +45,7 @@
                             {{-- Student --}}
                         @else
                             <li class="sidebar-item active">
-                                <a href="{{ route('dashboard') }}" class="sidebar-link">
+                                <a href="{{ route('student.dashboard') }}" class="sidebar-link">
                                     <i class="bi bi-grid-fill"></i>
                                     <span>Dashboard</span>
                                 </a>
@@ -95,7 +100,7 @@
                                 </a>
                             </li>
 
-                        {{-- Lecturer --}}
+                            {{-- Lecturer --}}
                         @elseif (Auth::user()->roles_id == 2)
                             <li class="sidebar-item">
                                 <a href="{{ route('subjectlist') }}" class='sidebar-link'>
@@ -104,7 +109,7 @@
                                 </a>
                             </li>
 
-                        {{-- Student --}}
+                            {{-- Student --}}
                         @else
                             <li class="sidebar-item">
                                 <a href="{{ route('subjectlist') }}" class='sidebar-link'>

@@ -145,8 +145,42 @@
         /* Adjust the width as needed */
     }
 
-    .search-margin-bottom {
+    .search-margin-subject {
         margin-bottom: 1%;
+        margin-top: -1%;
+        margin-left: -1%;
+    }
+
+    .search-margin-class {
+        margin-bottom: 2%;
+        margin-top: -2%;
+        margin-left: -1.3%;
+    }
+
+    .search-margin-attendance {
+        margin-bottom: 1%;
+        margin-top: -1.5%;
+        margin-left: -1%;
+    }
+
+    @media (max-width: 767px) {
+        .search-margin-subject {
+            margin-bottom: 5%;
+            margin-top: -6%;
+            margin-left: -5%;
+        }
+
+        .search-margin-class {
+            margin-bottom: 5%;
+            margin-top: -6%;
+            margin-left: -5%;
+        }
+
+        .search-margin-attendance {
+            margin-bottom: 5%;
+            margin-top: -6%;
+            margin-left: -5%;
+        }
     }
 
     .margin-bottom {

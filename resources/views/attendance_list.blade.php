@@ -273,7 +273,8 @@
                 <div class="page-heading">
                     <div class="row">
                         <div class="col-md-6">
-                            <h2>Attendance List</h2>
+                            <h2>{{ $class->subject->subjectCode }} - {{ $class->subject->subjectName }}</h2>
+                            <h2>{{ $class->name }} Attendance List</h2>
                         </div>
                         @if (Auth::user()->roles_id == 1)
                             <div class="col-md-6 text-end">
@@ -288,66 +289,69 @@
 
                     </div>
                 </div>
-                <div class="col-md-6 col-12 search-margin-bottom">
+                <div class="col-md-6 col-12 search-margin-attendance">
                     <div class="dataTable-search">
                         <input id="searchAttendance" class="dataTable-input" placeholder="Search..." type="text">
                     </div>
                 </div>
 
                 {{-- Table --}}
-                <div class="table table-hover brd" id="">
-                    <table class="table table-hover bdr">
+                <div class="table-responsive">
+                    <div class="table table-hover brd" id="">
+                        <table class="table table-hover bdr">
 
-                        {{-- Head of Table --}}
-                        <thead class="bg-blue">
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Student ID</th>
-                                <th scope="col">Student Name</th>
-                                <th scope="col">Course</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-
-                        {{-- Body of Table --}}
-                        <tbody class="bg-white">
-                            <?php
-                            $num = 1;
-                            ?>
-                            @foreach ($class->attendances as $attendance)
-                                {{-- Present --}}
+                            {{-- Head of Table --}}
+                            <thead class="bg-blue">
                                 <tr>
-                                    <td class="text-bold-700">{{ $num }}</td>
-                                    <?php
-                                    $num++;
-                                    ?>
-                                    <td>{{ $attendance->user->student->studentId }}</td>
-                                    <td>{{ $attendance->user->name }}</td>
-                                    <td>{{ $attendance->user->student->course->name }}</td>
-                                    <td>{{ $attendance->created_at }}</td>
-                                    <td>
-                                        @if ($attendance->statuses_id == 1)
-                                            <span class="badge bg-success">{{ $attendance->status->name }}</span>
-                                        @elseif ($attendance->statuses_id == 2)
-                                            <span class="badge bg-danger">{{ $attendance->status->name }}</span>
-                                        @elseif ($attendance->statuses_id == 3)
-                                            <span class="badge bg-end">{{ $attendance->status->name }}</span>
-                                        @endif
-                                    </td>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Student ID</th>
+                                    <th scope="col">Student Name</th>
+                                    <th scope="col">Course</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Status</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    {{-- Pagination --}}
-                    <div class="table-responsive dataTable-bottom">
-                        <nav class="dataTable-pagination">
-                            <ul class="dataTable-pagination-list pagination pagination-primary">
-                                {{ $attendances->links('pagination::bootstrap-4') }}
-                            </ul>
-                        </nav>
+                            </thead>
+
+                            {{-- Body of Table --}}
+                            <tbody class="bg-white">
+                                <?php
+                                $num = 1;
+                                ?>
+                                @foreach ($class->attendances as $attendance)
+                                    {{-- Present --}}
+                                    <tr>
+                                        <td class="text-bold-700">{{ $num }}</td>
+                                        <?php
+                                        $num++;
+                                        ?>
+                                        <td>{{ $attendance->user->student->studentId }}</td>
+                                        <td>{{ $attendance->user->name }}</td>
+                                        <td>{{ $attendance->user->student->course->name }}</td>
+                                        <td>{{ $attendance->created_at }}</td>
+                                        <td>
+                                            @if ($attendance->statuses_id == 1)
+                                                <span class="badge bg-success">{{ $attendance->status->name }}</span>
+                                            @elseif ($attendance->statuses_id == 2)
+                                                <span class="badge bg-danger">{{ $attendance->status->name }}</span>
+                                            @elseif ($attendance->statuses_id == 3)
+                                                <span class="badge bg-end">{{ $attendance->status->name }}</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        {{-- Pagination --}}
+                        <div class="table-responsive dataTable-bottom">
+                            <nav class="dataTable-pagination">
+                                <ul class="dataTable-pagination-list pagination pagination-primary">
+                                    {{ $attendances->links('pagination::bootstrap-4') }}
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
