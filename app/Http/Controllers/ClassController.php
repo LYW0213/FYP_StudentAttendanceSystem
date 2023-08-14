@@ -74,13 +74,11 @@ class ClassController extends Controller
                         $message['message'] = "Attend Successfully";
                         $message['status'] = "success";
                     } else if ($currenttime >= $starttime && $currenttime <= $endtime) {
-                        if ($currenttime->diffInMinutes($starttime) <= 10) {
-                            // Attend within 10 minutes of start time
+                        if ($currenttime->diffInMinutes($starttime) <= 15) {
                             $class->attendances()->create(['statuses_id' => 1, 'user_id' => $request->user()->id]);
                             $message['message'] = "Attend Successfully";
                             $message['status'] = "success";
                         } else {
-                            // Late attendance
                             $class->attendances()->create(['statuses_id' => 3, 'user_id' => $request->user()->id]);
                             $message['message'] = "You're Late";
                             $message['status'] = "Error";

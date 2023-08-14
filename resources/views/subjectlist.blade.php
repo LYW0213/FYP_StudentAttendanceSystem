@@ -68,7 +68,7 @@
                 <div class="col-12">
                     <div class="row">
                         {{-- Search Bar --}}
-                        <div class="col-md-6 col-12 search-margin-bottom">
+                        <div class="col-md-6 col-12 search-margin-subject">
                             <div class="dataTable-search">
                                 <input id="searchInput" class="dataTable-input" placeholder="Search..." type="text">
                             </div>
@@ -309,7 +309,6 @@
                                 <td>{{ $subject->user->name }}</td>
                                 <td>
                                     <div class="d-flex">
-                                        @if (auth::user()->roles_id == 1)
                                             <a href="{{ route('classeslist', ['subject' => $subject]) }}">
                                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
@@ -330,28 +329,7 @@
                                                 </svg>
                                             </a>
 
-                                            @elseif (auth::user()->roles_id == 2)
-                                            <a href="{{ route('classeslist', ['subject' => $subject]) }}">
-                                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-                                                    y="0px" viewBox="0 0 512 512"
-                                                    style="enable-background:new 0 0 512 512; width: 28px; height: 28px;"
-                                                    xml:space="preserve">
-                                                    <g>
-                                                        <path
-                                                            d="M359.3,138.6v-28.2c0-2.6-2.1-4.7-4.7-4.7H129.2c-2.6,0-4.7,2.1-4.7,4.7v28.2c0,2.6,2.1,4.7,4.7,4.7h225.5
-                                                C357.2,143.3,359.3,141.2,359.3,138.6z M129.2,190.2c-2.6,0-4.7,2.1-4.7,4.7v28.2c0,2.6,2.1,4.7,4.7,4.7h108c2.6,0,4.7-2.1,4.7-4.7
-                                                v-28.2c0-2.6-2.1-4.7-4.7-4.7H129.2z M213.7,455.6H77.5V42.3h328.8v202c0,2.6,2.1,4.7,4.7,4.7h32.9c2.6,0,4.7-2.1,4.7-4.7V18.8
-                                                c0-10.4-8.4-18.8-18.8-18.8H54C43.6,0,35.2,8.4,35.2,18.8v460.3c0,10.4,8.4,18.8,18.8,18.8h159.7c2.6,0,4.7-2.1,4.7-4.7v-32.9
-                                                C218.4,457.7,216.3,455.6,213.7,455.6z M475.4,485.9l-54.8-54.8c13.1-17.3,20.9-38.9,20.9-62.4c0-57.1-46.3-103.3-103.3-103.3
-                                                s-103.3,46.3-103.3,103.3s46.3,103.3,103.3,103.3c21,0,40.5-6.3,56.8-17l55.6,55.6c0.9,0.9,2.1,1.4,3.3,1.4s2.4-0.5,3.3-1.4
-                                                l18.2-18.2C477.2,490.6,477.2,487.7,475.4,485.9L475.4,485.9z M338.2,434.5c-36.3,0-65.8-29.4-65.8-65.8s29.4-65.8,65.8-65.8
-                                                c36.3,0,65.8,29.4,65.8,65.8S374.5,434.5,338.2,434.5z" />
-                                                    </g>
-                                                </svg>
-                                            </a>
-                                        @endif
-                                        {{-- View Icon --}}
+                                        {{-- Delete Icon --}}
                                         @if (auth::user()->roles_id == 1)
                                             <a href="#" class="mr-2"
                                                 onclick="return confirmDeleteSubject({{ $subject->id }})"><svg
