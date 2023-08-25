@@ -50,12 +50,18 @@
         color: white;
     }
 
+    .btn-primary2 {
+        background-color: #435ebe;
+        color: white;
+        font-weight: 500;
+    }
+
     .btn-primary {
         font-weight: 500;
     }
 
     .btn-primary:hover {
-        background-color: #5F618F;
+        background-color: #25396f;
         box-shadow: 0 4px 4px #5F618F;
     }
 

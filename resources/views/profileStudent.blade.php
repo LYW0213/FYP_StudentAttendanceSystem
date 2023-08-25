@@ -139,6 +139,11 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="col-12 d-flex justify-content-center">
+                                            <a href="{{ route('admin.studentlist') }}" class="btn btn-primary2 me-1 mb-1">
+                                                Back To Dasboard
+                                            </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
